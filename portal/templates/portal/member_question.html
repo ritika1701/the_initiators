@@ -1,0 +1,47 @@
+{% extends "portal/base.html" %}
+
+{% block member_dashboard %}
+    <script>
+        $(document).ready(function () {
+            $('.datetime-input').datepicker();
+        });
+    </script>
+    <div class="page-breadcrumb">
+        <ol class="breadcrumb container">
+            <li><a href="index-2.html">Home</a></li>
+            <li class="active">Dashboard</li>
+        </ol>
+    </div>
+    <div class="page-title">
+        <div class="container">
+            <h3>Dashboard : {{ request.user }}</h3>
+        </div>
+    </div>
+    <div class="container">
+
+        <div id="main-wrapper" class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Ask your Question here:</h3>
+                        </div>
+                        <br/>
+                        <div class="panel-body">
+                            <form method="post" action="" name="ask">
+                                {% load crispy_forms_tags %}
+
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                <input type="submit" class="btn btn-success btn-large" value="Ask Question">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Row -->
+        </div>
+
+
+    </div>
+{% endblock %}
