@@ -5,7 +5,7 @@ from .ajax import *
 urlpatterns = [
 
     # url(r'^$',home,name="home"),
-    url(r'^login/$',login,name="login"),
+    url(r'^$',login,name="login"),
 
     #member url
     url(r'^member_login/$',member_login,name="member_login"),
@@ -39,4 +39,3 @@ urlpatterns = [
 
 
 ]
-

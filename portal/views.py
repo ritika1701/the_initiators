@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
+from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect,HttpResponse
 from .forms import Member, QuestionForm, AnswerForm , Cs_admissable
@@ -8,6 +9,12 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Question, Department, QuestionFor, Recommendation
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
+
 
 
 # Create your views here.
@@ -154,13 +161,26 @@ def member_question(request):
             asking_to = form.cleaned_data['asking_to']
             subject = form.cleaned_data['subject']
             deadline = form.cleaned_data['deadline']
+            user_emai='ritikamittal1701@gmail.com'
             department = Department.objects.get(department_name=asking_to)
+            to_user=department.user
+
             user = User.objects.get(username=request.user)
             question = Question.objects.create(text=question, type=type, asked_by=user, deadline=deadline,
                                                subject=subject)
             questionfor = question.questionfor_set.create(asked_to=department)
             question.save()
             questionfor.save()
+            email_from = settings.EMAIL_HOST_USER
+
+            text_content = "This to inform you that new questions have arrived at your portal.Reply before the deadline "
+            user_email=to_user.email
+
+            #html_content = render_to_string('portal/templates/portal/email.html', {'Department':'asking_to'},{'username':'request.user'}) # ...
+            #text_content = strip_tags(html_content) # this strips the html, so people will have the text as well.
+
+            # crete the email, and attach the HTML version as well.
+            send_mail(subject,text_content,email_from,[user_emai],fail_silently=False)
             messages.success(request, "Thank you for your time, The department will reply as soon as possible")
             return redirect(reverse('member_dashboard'))
 

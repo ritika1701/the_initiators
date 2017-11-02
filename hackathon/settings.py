@@ -9,6 +9,12 @@ https://docs.djangoproject.com/en/1.10/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
+#for gmail or google Apps
+EMAIL_USE_TLS=True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'srivastavapankhuri.12@gmail.com'
+EMAIL_HOST_PASSWORD = 'pankhuri123'
+EMAIL_PORT = 587
 
 import os
 
