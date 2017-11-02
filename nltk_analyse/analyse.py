@@ -67,7 +67,7 @@ def analyse_keywords(example):
             print("matching set")
             print(match)
             found.extend(match)
-            exact_key.append(list((f.name,len(match))))
+            exact_key.append(list((os.path.basename(f.name),len(match))))
     f.close()
     print(exact_key)
     found=sorted(set(found))
@@ -93,6 +93,7 @@ def analyse_keywords(example):
     syn_count=[]
     for i in range(len(files)):                                               # count for synonyms--------------------------
         fopen = open(os.path.join(BASE_DIR,files[i]))
+        
         text = fopen.read().strip().split()
         text = sorted(set(text))
         text = {item.lower() for item in text}
@@ -100,7 +101,7 @@ def analyse_keywords(example):
         if len(comm)>0:
             print("synonyms set" )
             print(comm)
-            syn_count.append(list((fopen.name,len(comm))))                   # synoyms counted--------------------------
+            syn_count.append(list((os.path.basename(fopen.name),len(comm))))                   # synoyms counted--------------------------
     fopen.close()
     print(syn_count)
 
@@ -164,4 +165,4 @@ def analyse_keywords(example):
         suggestion.append(l.split('/')[-1])
     return suggestion
 
-# analyse_keywords(example)
+#analyse_keywords(example)
